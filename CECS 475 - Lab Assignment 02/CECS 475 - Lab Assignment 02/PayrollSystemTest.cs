@@ -11,6 +11,8 @@ namespace CECS_475___Lab_Assignment_02
         public delegate bool ComparisonHandler(Employee first, Employee second);
         public static void Main(string[] args)
         {
+            bool programEnd = false;
+
             // create derived class objects
             IPayable[] payableObjects = new IPayable[8];
             payableObjects[0] = new SalariedEmployee("John", "Smith", "111-11-1111", 700M);
@@ -22,20 +24,53 @@ namespace CECS_475___Lab_Assignment_02
             payableObjects[6] = new BasePlusCommissionEmployee("Bob", "Lewis", "777-77-7777", 5000M, .04M, 300M);
             payableObjects[7] = new BasePlusCommissionEmployee("Lee", "Duarte", "888-88-888", 5000M, .04M, 300M);
 
-            Console.WriteLine("Employees processed polymorphically:\n");
-            displayResult(payableObjects);
-           
-            Array.Sort(payableObjects);
-            Console.WriteLine("\nEmployees sorted by last name: ");
-            displayResult(payableObjects);
+            while (!programEnd)
+            {
+                Console.WriteLine("1. Sort by last name");
+                Console.WriteLine("2. Sort by pay");
+                Console.WriteLine("3. Sort by social security number");
+                Console.WriteLine("4. Exit the program");
 
-            Array.Sort(payableObjects, Employee.sortByPay.sortYearAscending());
-            Console.WriteLine("\nEmployees sorted by pay: ");
-            displayResult(payableObjects);
+                Console.Write("Please select an option from the Employee menu: ");
+                int input = Convert.ToInt16(Console.ReadLine());
+                Console.WriteLine();
+                
+                /*
+                Console.WriteLine("Employees processed polymorphically:\n");
+                displayResult(payableObjects);
+                */
+                if (input == 1)
+                {
+                    Array.Sort(payableObjects);
+                    Console.WriteLine("\nEmployees sorted by last name: ");
+                    displayResult(payableObjects);
+                }
 
-            selectionSort(payableObjects, AlphabeticalGreaterThan);
-            Console.WriteLine("\nEmployees sorted by SSN: ");
-            displayResult(payableObjects);
+                else if (input == 2)
+                {
+                    Array.Sort(payableObjects, Employee.sortByPay.sortYearAscending());
+                    Console.WriteLine("\nEmployees sorted by pay: ");
+                    displayResult(payableObjects);
+                }
+
+                else if (input == 3)
+                {
+                    selectionSort(payableObjects, AlphabeticalGreaterThan);
+                    Console.WriteLine("\nEmployees sorted by SSN: ");
+                    displayResult(payableObjects);
+                }
+
+                else if (input == 4)
+                {
+                    Console.WriteLine("Thank you for using the program! Exiting.....");
+                    programEnd = true;
+                }
+
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid option from the menu.");
+                }
+            }
 
             Console.Read();
         } // end Main
@@ -63,11 +98,6 @@ namespace CECS_475___Lab_Assignment_02
                 Console.WriteLine(
                    "earned {0:C}\n", currentEmployee.Earnings());
             } // end foreach
-        }
-
-        public static bool descendingOrder(int first, int second)
-        {
-            return second > first;
         }
 
         public static bool AlphabeticalGreaterThan(Employee first, Employee second)
