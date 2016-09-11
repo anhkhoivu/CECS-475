@@ -9,13 +9,22 @@ namespace CECS_475___Lab_Assignment_02
 {
     public abstract class Employee : IPayable, IComparable
     {
-        public delegate bool ComparisonHandler(Employee first, Employee second);
+        public delegate bool ComparisonHandler(object first, object second);
+        /// <summary>
+        /// Class that implements the IComparer interface.
+        /// </summary>
         public class sortByPay : IComparer
         {
+            /// <summary>
+            /// This method overrides the Compare method in IComparer to sort by Employee's earnings.
+            /// </summary>
+            /// <param name="a">Parameter that contains a generic object.</param>
+            /// <param name="b">Parameter that contains a generic object.</param>
+            /// <returns>returns the integer comparison between the two parameter objects</returns>
             int IComparer.Compare(object a, object b)
             {
                 Employee e1 = (Employee) a;
-                Employee e2 = (Employee)b;
+                Employee e2 = (Employee) b;
                 if (e1.Earnings() > e2.Earnings())
                     return 1;
                 if (e1.Earnings() < e2.Earnings())
@@ -24,22 +33,37 @@ namespace CECS_475___Lab_Assignment_02
                  return 0;
             }
 
-            public static IComparer sortYearAscending()
+            /// <summary>
+            /// This method allows the program to call upon the Compare method in IComparer
+            /// </summary>
+            /// <returns>returns the initialization of the class.</returns>
+            public static IComparer sortPayAscending()
             {
                 return (IComparer)new sortByPay();
             }
         }
 
-        // read-only property that gets employee's first name
+        /// <summary>
+        /// read-only property that gets employee's first name
+        /// </summary>
         public string FirstName { get; private set; }
 
-        // read-only property that gets employee's last name
+        /// <summary>
+        /// read-only property that gets employee's last name
+        /// </summary>
         public string LastName { get; private set; }
 
-        // read-only property that gets employee's social security number
+        /// <summary>
+        /// read-only property that gets employee's social security number
+        /// </summary>
         public string SocialSecurityNumber { get; private set; }
 
-        // three-parameter constructor
+        /// <summary>
+        /// three-parameter constructor
+        /// </summary>
+        /// <param name="first">Parameter for the Employee's first name</param>
+        /// <param name="last">Parameter for the Employee's last name</param>
+        /// <param name="ssn">Parameter for the Employee's social security number.</param>
         public Employee(string first, string last, string ssn)
         {
             FirstName = first;
@@ -47,54 +71,38 @@ namespace CECS_475___Lab_Assignment_02
             SocialSecurityNumber = ssn;
         } // end three-parameter Employee constructor
 
-        // return string representation of Employee object, using properties
+        /// <summary>
+        /// This method displays the Employee's basic information.
+        /// </summary>
+        /// <returns>return string representation of Employee object, using properties</returns>
         public override string ToString()
         {
             return string.Format("{0} {1}\nsocial security number: {2}",
                FirstName, LastName, SocialSecurityNumber);
         } // end method ToString
 
+        /// <summary>
+        /// This method overrides the CompareTo method of IComparable
+        /// </summary>
+        /// <param name="obj">Parameter that takes in any object.</param>
+        /// <returns>returns the integer comparison of CompareTo.</returns>
         int IComparable.CompareTo(object obj)
         {
             Employee e1 = (Employee)obj;
+            if (e1.LastName == this.LastName)
+            {
+                return String.Compare(e1.FirstName, this.FirstName);
+            }
             return String.Compare(e1.LastName, this.LastName);
         }
-        /*
-        public static void selectionSort(IPayable[] arr, ComparisonHandler comparison)
-        {
-            //pos_min is short for position of min
-            int pos_min;
-            Employee temp;
 
-            for (int i = 0; i < arr.Length - 1; i++)
-            {
-                pos_min = i;//set pos_min to the current index of array
-
-                for (int j = i + 1; j < arr.Length; j++)
-                {
-                    if (comparison((Employee)arr[j], (Employee) arr[pos_min]))
-                    {
-                        //pos_min will keep track of the index that min is in, this is needed when a swap happens
-                        pos_min = j;
-                    }
-                }
-
-                //if pos_min no longer equals i than a smaller value must have been found, so a swap must occur
-                if (pos_min != i)
-                {
-                    temp = (Employee)arr[i];
-                    arr[i] = arr[pos_min];
-                    arr[pos_min] = temp;
-                }
-            }
-        }*/
-
-        public static bool descendingOrder(int first, int second)
-        {
-            return second > first;
-        }
-
-        public static bool AlphabeticalGreaterThan(Employee first, Employee second)
+        /// <summary>
+        /// This method implements the ComparisonHandler delegate
+        /// </summary>
+        /// <param name="first">Parameter that has a Employee object.</param>
+        /// <param name="second">Parameter that has a Employee object.</param>
+        /// <returns>returns the boolean comparison</returns>
+        public static bool SSN_Comparison(Employee first, Employee second)
         {
             int comparison;
             comparison = (first.SocialSecurityNumber.ToString().CompareTo(second.SocialSecurityNumber.ToString()));
@@ -102,6 +110,10 @@ namespace CECS_475___Lab_Assignment_02
             return comparison > 0;
         }
 
+        /// <summary>
+        /// Abstract method that defines Earning method from IPayable.
+        /// </summary>
+        /// <returns>returns nothing</returns>
         public abstract decimal Earnings();
     } // end abstract class Employee
 }

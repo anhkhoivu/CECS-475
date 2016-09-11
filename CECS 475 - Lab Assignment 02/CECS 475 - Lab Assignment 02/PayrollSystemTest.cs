@@ -8,7 +8,7 @@ namespace CECS_475___Lab_Assignment_02
 {
     public class PayrollSystemTest
     {
-        public delegate bool ComparisonHandler(Employee first, Employee second);
+        public delegate bool ComparisonHandler(object first, object second);
         public static void Main(string[] args)
         {
             bool programEnd = false;
@@ -35,10 +35,6 @@ namespace CECS_475___Lab_Assignment_02
                 int input = Convert.ToInt16(Console.ReadLine());
                 Console.WriteLine();
                 
-                /*
-                Console.WriteLine("Employees processed polymorphically:\n");
-                displayResult(payableObjects);
-                */
                 if (input == 1)
                 {
                     Array.Sort(payableObjects);
@@ -48,14 +44,14 @@ namespace CECS_475___Lab_Assignment_02
 
                 else if (input == 2)
                 {
-                    Array.Sort(payableObjects, Employee.sortByPay.sortYearAscending());
+                    Array.Sort(payableObjects, Employee.sortByPay.sortPayAscending());
                     Console.WriteLine("\nEmployees sorted by pay: ");
                     displayResult(payableObjects);
                 }
 
                 else if (input == 3)
                 {
-                    selectionSort(payableObjects, AlphabeticalGreaterThan);
+                    selectionSort(payableObjects, SSN_Comparision);
                     Console.WriteLine("\nEmployees sorted by SSN: ");
                     displayResult(payableObjects);
                 }
@@ -75,6 +71,10 @@ namespace CECS_475___Lab_Assignment_02
             Console.Read();
         } // end Main
 
+        /// <summary>
+        /// Displays the contents of the IPayable array
+        /// </summary>
+        /// <param name="payableObjects">Parameter that contains the IPayable array.</param>
         static void displayResult(IPayable[] payableObjects)
         {
             foreach (IPayable currentEmployee in payableObjects)
@@ -100,19 +100,32 @@ namespace CECS_475___Lab_Assignment_02
             } // end foreach
         }
 
-        public static bool AlphabeticalGreaterThan(Employee first, Employee second)
+        /// <summary>
+        /// This delegate compares two different SSNs.
+        /// </summary>
+        /// <param name="first">Parameter for the first Employee object.</param>
+        /// <param name="second">Parameter for the second Employee object.</param>
+        /// <returns>returns the difference is true or false.</returns>
+        public static bool SSN_Comparision(object first, object second)
         {
             int comparison;
-            comparison = (first.SocialSecurityNumber.ToString().CompareTo(second.SocialSecurityNumber.ToString()));
+            Employee e1 = (Employee)first;
+            Employee e2 = (Employee)second;
+            comparison = (e1.SocialSecurityNumber.ToString().CompareTo(e2.SocialSecurityNumber.ToString()));
 
             return comparison > 0;
         }
 
-        static void selectionSort(IPayable[] arr, ComparisonHandler comparison)
+        /// <summary>
+        /// This method performs the selection sort.
+        /// </summary>
+        /// <param name="arr">Parameter contains the array of IPayable objects.</param>
+        /// <param name="comparison">Parameter contains the ComparisonHandler delegate.</param>
+        static void selectionSort(object[] arr, ComparisonHandler comparison)
         {
             //pos_min is short for position of min
             int pos_min;
-            Employee temp;
+            object temp;
 
             for (int i = 0; i < arr.Length - 1; i++)
             {
@@ -120,7 +133,7 @@ namespace CECS_475___Lab_Assignment_02
 
                 for (int j = i + 1; j < arr.Length; j++)
                 {
-                    if (comparison((Employee)arr[j], (Employee)arr[pos_min]))
+                    if (comparison(arr[j], arr[pos_min]))
                     {
                         //pos_min will keep track of the index that min is in, this is needed when a swap happens
                         pos_min = j;
@@ -130,7 +143,7 @@ namespace CECS_475___Lab_Assignment_02
                 //if pos_min no longer equals i than a smaller value must have been found, so a swap must occur
                 if (pos_min != i)
                 {
-                    temp = (Employee)arr[i];
+                    temp = arr[i];
                     arr[i] = arr[pos_min];
                     arr[pos_min] = temp;
                 }

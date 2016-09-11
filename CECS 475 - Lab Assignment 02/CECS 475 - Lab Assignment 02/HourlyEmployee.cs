@@ -11,6 +11,14 @@ namespace CECS_475___Lab_Assignment_02
         private decimal wage; // wage per hour
         private decimal hours; // hours worked for the week
 
+        /// <summary>
+        /// 5 parameter constructor for HourlyEmployee
+        /// </summary>
+        /// <param name="first">Parameter that contains the first name of an Employee.</param>
+        /// <param name="last">Parameter that contains the last name of an Employee.</param>
+        /// <param name="ssn">Parameter that contains the SSN of an Employee.</param>
+        /// <param name="hourlyWage">Parameter that contains the hourly wage of an Employee.</param>
+        /// <param name="hoursWorked">Parameter that contains the number of hours worked by an Employee.</param>
         // five-parameter constructor
         public HourlyEmployee(string first, string last, string ssn,
            decimal hourlyWage, decimal hoursWorked)
@@ -20,7 +28,9 @@ namespace CECS_475___Lab_Assignment_02
             Hours = hoursWorked; // validate hours worked via property
         } // end five-parameter HourlyEmployee constructor
 
-        // property that gets and sets hourly employee's wage
+        /// <summary>
+        /// property that gets and sets hourly employee's wage
+        /// </summary>
         public decimal Wage
         {
             get
@@ -37,7 +47,9 @@ namespace CECS_475___Lab_Assignment_02
             } // end set
         } // end property Wage
 
-        // property that gets and sets hourly employee's hours
+        /// <summary>
+        /// property that gets and sets hourly employee's hours
+        /// </summary>
         public decimal Hours
         {
             get
@@ -54,7 +66,10 @@ namespace CECS_475___Lab_Assignment_02
             } // end set
         } // end property Hours
 
-        // calculate earnings; override Employee’s abstract method Earnings
+        /// <summary>
+        /// calculate earnings; override Employee’s abstract method Earnings
+        /// </summary>
+        /// <returns>returns the Employee's earnings.</returns>
         public override decimal Earnings()
         {
             if (Hours <= 40) // no overtime                          
@@ -63,7 +78,10 @@ namespace CECS_475___Lab_Assignment_02
                 return (40 * Wage) + ((Hours - 40) * Wage * 1.5M);
         } // end method Earnings                                      
 
-        // return string representation of HourlyEmployee object
+        /// <summary>
+        /// return string representation of HourlyEmployee object
+        /// </summary>
+        /// <returns>displays the setup for an HourlyEmployee object.</returns>
         public override string ToString()
         {
             return string.Format(

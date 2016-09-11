@@ -11,7 +11,14 @@ namespace CECS_475___Lab_Assignment_02
         private decimal grossSales; // gross weekly sales
         private decimal commissionRate; // commission percentage
 
-        // five-parameter constructor
+        /// <summary>
+        /// five-parameter constructor for CommissionEmployee
+        /// </summary>
+        /// <param name="first">Parameter that contains the first name of the employee.</param>
+        /// <param name="last">Parameter that contains the last name of the employee.</param>
+        /// <param name="ssn">Parameter that contains the SSN of the employee.</param>
+        /// <param name="sales">Parameter that contains the sales of an employee.</param>
+        /// <param name="rate">Parameter that contains the rate of an employee.</param>
         public CommissionEmployee(string first, string last, string ssn,
            decimal sales, decimal rate) : base(first, last, ssn)
         {
@@ -19,7 +26,9 @@ namespace CECS_475___Lab_Assignment_02
             CommissionRate = rate; // validate commission rate via property
         } // end five-parameter CommissionEmployee constructor
 
-        // property that gets and sets commission employee's gross sales
+        /// <summary>
+        /// property that gets and sets commission employee's gross sales
+        /// </summary>
         public decimal GrossSales
         {
             get
@@ -36,7 +45,9 @@ namespace CECS_475___Lab_Assignment_02
             } // end set
         } // end property GrossSales
 
-        // property that gets and sets commission employee's commission rate
+        /// <summary>
+        /// property that gets and sets commission employee's commission rate
+        /// </summary>
         public decimal CommissionRate
         {
             get
@@ -53,13 +64,19 @@ namespace CECS_475___Lab_Assignment_02
             } // end set
         } // end property CommissionRate
 
-        // calculate earnings; override abstract method Earnings in Employee
+        /// <summary>
+        /// calculate earnings; override abstract method Earnings in Employee
+        /// </summary>
+        /// <returns>return the Earnings of the Employee.</returns>
         public override decimal Earnings()
         {
             return CommissionRate * GrossSales;
         } // end method Earnings              
 
-        // return string representation of CommissionEmployee object
+        /// <summary>
+        /// Displays the output of a CommissionEmployee.
+        /// </summary>
+        /// <returns>return string representation of CommissionEmployee object</returns>
         public override string ToString()
         {
             return string.Format("{0}: {1}\n{2}: {3:C}\n{4}: {5:F2}",
