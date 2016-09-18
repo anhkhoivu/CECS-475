@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CECS_475___Lab_Assignment_03
 {
+    public delegate void StockNotification(String stockName, int currentValue, int numberChanges);
     class StockApplication
     {
         static void Main(string[] args)
@@ -14,11 +15,13 @@ namespace CECS_475___Lab_Assignment_03
             Stock stock2 = new Stock("Retail", 30, 2, 6);
             Stock stock3 = new Stock("Banking", 90, 4, 10);
             Stock stock4 = new Stock("Commodity", 500, 20, 50);
-            /*
+            // stock1.displayStock();
+
+            Console.WriteLine("Broker \t\t" + "Stock\t\t" + "Value\t\t" + "Changes");
             StockBroker b1 = new StockBroker("Broker 1");
             b1.AddStock(stock1);
             b1.AddStock(stock2);
-
+            
             StockBroker b2 = new StockBroker("Broker 2");
             b2.AddStock(stock1);
             b2.AddStock(stock3);
@@ -33,7 +36,6 @@ namespace CECS_475___Lab_Assignment_03
             b4.AddStock(stock2);
             b4.AddStock(stock3);
             b4.AddStock(stock4);
-            */
         }
     }
 }
