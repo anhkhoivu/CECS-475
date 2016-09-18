@@ -15,7 +15,6 @@ namespace CECS_475___Lab_Assignment_03
             Stock stock2 = new Stock("Retail", 30, 2, 6);
             Stock stock3 = new Stock("Banking", 90, 4, 10);
             Stock stock4 = new Stock("Commodity", 500, 20, 50);
-            // stock1.displayStock();
 
             Console.WriteLine("Broker \t\t" + "Stock\t\t" + "Value\t\t" + "Changes");
             StockBroker b1 = new StockBroker("Broker 1");

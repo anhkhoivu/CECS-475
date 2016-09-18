@@ -8,8 +8,6 @@ namespace CECS_475___Lab_Assignment_03
 {
     class StockBroker
     {
-        public event StockNotification notify;
-
         List<Stock> stockList = new List<Stock>();
         string brokerName;
 
