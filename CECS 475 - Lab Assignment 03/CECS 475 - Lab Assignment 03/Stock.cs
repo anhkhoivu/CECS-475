@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,9 +10,11 @@ namespace CECS_475___Lab_Assignment_03
     public class Stock
     {
         public delegate void StockNotification(string name, int currentValue, int numberChanges);
+        
         public EventHandler test;
         public event StockNotification stockEvent;
 
+        string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string name;
         int initialValue;
         int currentValue;
@@ -19,6 +22,7 @@ namespace CECS_475___Lab_Assignment_03
         int maximumChange;
         int notificationThreshold;
         Thread stockThread;
+        DateTime thisDay = DateTime.Now;
 
         public Stock(string name, int startingValue, int maxChange, int threshold)
         {
@@ -84,6 +88,7 @@ namespace CECS_475___Lab_Assignment_03
             numberOfChanges++;
             if ((currentValue - initialValue) > notificationThreshold)
             {
+                OutputStock();
                 OnStockNotified();
             }
         }
@@ -93,6 +98,17 @@ namespace CECS_475___Lab_Assignment_03
             if (stockEvent != null)
             {
                 stockEvent(name, currentValue, numberOfChanges);
+            }
+        }
+
+        protected virtual void OutputStock()
+        {
+            string displayValue = stockCurrentValue.ToString();
+            string displayInitValue = stockInitialValue.ToString();
+            using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\StockOutput.txt", true))
+            {
+                outputFile.WriteLine(thisDay.ToString().PadRight(30) + name.PadRight(15) +
+                       displayInitValue.PadRight(15) + displayValue);
             }
         }
     }

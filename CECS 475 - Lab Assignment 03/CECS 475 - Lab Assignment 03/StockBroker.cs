@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace CECS_475___Lab_Assignment_03
 {
+    /// <summary>
+    /// StockBroker class.
+    /// </summary>
     class StockBroker
     {
         List<Stock> stockList = new List<Stock>();
         string brokerName;
 
+        /// <summary>
+        /// Default constructor for StockBroker.
+        /// </summary>
+        /// <param name="name">Parameter for </param>
         public StockBroker(string name)
         {
             brokerName = name;
@@ -30,6 +37,5 @@ namespace CECS_475___Lab_Assignment_03
             Console.WriteLine(brokerName.PadRight(16) + newStock.stockName.PadRight(16)
                 + displayValue.PadRight(16) + displayChanges);
         }
-
     }
 }
