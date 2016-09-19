@@ -19,7 +19,6 @@ namespace CECS_475___Lab_Assignment_03
         int numberOfChanges = 0;
         int maximumChange;
         int notificationThreshold;
-        string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         Thread stockThread;
         DateTime thisDay = DateTime.Now;
 
@@ -111,7 +110,6 @@ namespace CECS_475___Lab_Assignment_03
             numberOfChanges++;
             if ((currentValue - initialValue) > notificationThreshold)
             {
-                OutputStock();
                 OnStockNotified();
             }
         }
@@ -124,20 +122,6 @@ namespace CECS_475___Lab_Assignment_03
             if (stockEvent != null)
             {
                 stockEvent(name, currentValue, numberOfChanges);
-            }
-        }
-
-        /// <summary>
-        /// Listens for the event OutputStock()
-        /// </summary>
-        protected virtual void OutputStock()
-        {
-            string displayValue = stockCurrentValue.ToString();
-            string displayInitValue = stockInitialValue.ToString();
-            using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\StockOutput.txt", true))
-            {
-                outputFile.WriteLine(thisDay.ToString().PadRight(30) + name.PadRight(15) +
-                       displayInitValue.PadRight(15) + displayValue);
             }
         }
     }
