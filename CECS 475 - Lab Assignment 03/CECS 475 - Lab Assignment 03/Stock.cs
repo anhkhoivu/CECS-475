@@ -10,20 +10,26 @@ namespace CECS_475___Lab_Assignment_03
     public class Stock
     {
         public delegate void StockNotification(string name, int currentValue, int numberChanges);
-        
-        public EventHandler test;
+        public EventHandler stockHandler;
         public event StockNotification stockEvent;
 
-        string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string name;
         int initialValue;
         int currentValue;
         int numberOfChanges = 0;
         int maximumChange;
         int notificationThreshold;
+        string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         Thread stockThread;
         DateTime thisDay = DateTime.Now;
 
+        /// <summary>
+        /// Default constructor for Stock.
+        /// </summary>
+        /// <param name="name">Parmeter that takes in the stock name.</param>
+        /// <param name="startingValue">Parameter that takes in the starting value of the stock.</param>
+        /// <param name="maxChange">Parameter that takes in the maximum change of a stock.</param>
+        /// <param name="threshold">Parameter that takes in the maximum threshold of changes for notification of a stock.</param>
         public Stock(string name, int startingValue, int maxChange, int threshold)
         {
             this.name = name;
@@ -35,6 +41,9 @@ namespace CECS_475___Lab_Assignment_03
             stockThread.Start();
         }
 
+        /// <summary>
+        /// Gets name of stock.
+        /// </summary>
         public string stockName
         {
             get
@@ -43,6 +52,9 @@ namespace CECS_475___Lab_Assignment_03
             }
         }
 
+        /// <summary>
+        /// Gets initial value of a stock.
+        /// </summary>
         public int stockInitialValue
         {
             get
@@ -51,6 +63,9 @@ namespace CECS_475___Lab_Assignment_03
             }
         }
 
+        /// <summary>
+        /// Gets current value of a stock.
+        /// </summary>
         public int stockCurrentValue
         {
             get
@@ -59,6 +74,9 @@ namespace CECS_475___Lab_Assignment_03
             }
         }
 
+        /// <summary>
+        /// Gets number of changes of a stock.
+        /// </summary>
         public int stockChanges
         {
             get
@@ -67,20 +85,25 @@ namespace CECS_475___Lab_Assignment_03
             }
         }
 
+        /// <summary>
+        /// Activates the thread and the process.
+        /// </summary>
         public void Activate()
         {
-
             for (;;)
             {
                 Thread.Sleep(500);
                 ChangeStockValue();
-                if (test != null)
+                if (stockHandler != null)
                 {
-                    test(this, null);
+                    stockHandler(this, null);
                 }
             }
         }
 
+        /// <summary>
+        /// Changes the stock value.
+        /// </summary>
         public void ChangeStockValue()
         {
             Random newRand = new Random();
@@ -93,6 +116,9 @@ namespace CECS_475___Lab_Assignment_03
             }
         }
 
+        /// <summary>
+        /// Listens for the event OnStockNotified()
+        /// </summary>
         protected virtual void OnStockNotified()
         {
             if (stockEvent != null)
@@ -101,6 +127,9 @@ namespace CECS_475___Lab_Assignment_03
             }
         }
 
+        /// <summary>
+        /// Listens for the event OutputStock()
+        /// </summary>
         protected virtual void OutputStock()
         {
             string displayValue = stockCurrentValue.ToString();

@@ -17,18 +17,27 @@ namespace CECS_475___Lab_Assignment_03
         /// <summary>
         /// Default constructor for StockBroker.
         /// </summary>
-        /// <param name="name">Parameter for </param>
+        /// <param name="name">Parameter for brokerName</param>
         public StockBroker(string name)
         {
             brokerName = name;
         }
         
+        /// <summary>
+        /// Adds a Stock to the List.
+        /// </summary>
+        /// <param name="stock">Parameter that takes in a stock.</param>
         public void AddStock(Stock stock)
         {
             stockList.Add(stock);
-            stock.test += OnEventNotified;
+            stock.stockHandler += OnEventNotified;
         }
 
+        /// <summary>
+        /// Listener for EventHandler
+        /// </summary>
+        /// <param name="o">Default object parameter for an object type.</param>
+        /// <param name="e">Default EventArgs parameter.</param>
         protected void OnEventNotified(object o, EventArgs e)
         {
             Stock newStock = (Stock)o;
