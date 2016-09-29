@@ -12,6 +12,9 @@ namespace CECS_475___Lab_Assignment_05
         private decimal grossSales; // gross weekly sales
         private decimal commissionRate; // commission percentage
 
+        public CommissionEmployee() : base()
+        { }
+
         /// <summary>
         /// five-parameter constructor for CommissionEmployee
         /// </summary>

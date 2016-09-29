@@ -10,7 +10,10 @@ namespace CECS_475___Lab_Assignment_05
     class BasePlusCommissionEmployee : CommissionEmployee, INotifyPropertyChanged
     {
         private decimal baseSalary; // base salary per week
-        
+
+        public BasePlusCommissionEmployee() : base()
+        { }
+
         /// <summary>
         /// six parameter constructor for BasePlusCommissionEmployee
         /// </summary>

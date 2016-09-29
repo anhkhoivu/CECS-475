@@ -11,7 +11,10 @@ namespace CECS_475___Lab_Assignment_05
     {
         private decimal wage; // wage per hour
         private decimal hours; // hours worked for the week
-        
+
+        public HourlyEmployee() : base()
+        { }
+
         /// <summary>
         /// 5 parameter constructor for HourlyEmployee
         /// </summary>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Employee Data -->
+<Employees>
+  <Employee Tag ="SalariedEmployee">
+    <FirstName>John</FirstName>
+    <LastName>Smith</LastName>
+    <SSN>111-11-1111</SSN>
+    <Salary>700</Salary>
+  </Employee>
+  <Employee Tag ="SalariedEmployee">
+    <FirstName>Antonio</FirstName>
+    <LastName>Smith</LastName>
+    <SSN>555-55-5555</SSN>
+    <Salary>800</Salary>
+  </Employee>
+  <Employee Tag ="SalariedEmployee">
+    <FirstName>Victor</FirstName>
+    <LastName>Smith</LastName>
+    <SSN>444-44-4444</SSN>
+    <Salary>600</Salary>
+  </Employee>
+  <Employee Tag ="HourlyEmployee">
+    <FirstName>Karen</FirstName>
+    <LastName>Price</LastName>
+    <SSN>222-22-2222</SSN>
+    <HourlyRate>16.75</HourlyRate>
+    <HoursWorked>40</HoursWorked>
+  </Employee>
+  <Employee Tag ="HourlyEmployee">
+    <FirstName>Ruben</FirstName>
+    <LastName>Zamora</LastName>
+    <SSN>666-66-6666</SSN>
+    <HourlyRate>20</HourlyRate>
+    <HoursWorked>40</HoursWorked>
+  </Employee>
+  <Employee Tag ="CommissionEmployee">
+    <FirstName>Sue</FirstName>
+    <LastName>Jones</LastName>
+    <SSN>333-33-3333</SSN>
+    <Sales>10000</Sales>
+    <Rate>.06</Rate>
+  </Employee>
+  <Employee Tag ="BasePlusCommissionEmployee">
+    <FirstName>Bob</FirstName>
+    <LastName>Lewis</LastName>
+    <SSN>777-77-7777</SSN>
+    <Sales>5000</Sales>
+    <Rate>.04</Rate>
+    <Salary>300</Salary>
+  </Employee>
+  <Employee Tag ="BasePlusCommissionEmployee">
+    <FirstName>Lee</FirstName>
+    <LastName>Duarte</LastName>
+    <SSN>888-88-888</SSN>
+    <Sales>5000</Sales>
+    <Rate>.04</Rate>
+    <Salary>300</Salary>
+  </Employee>
+</Employees>

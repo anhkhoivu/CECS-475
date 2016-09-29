@@ -17,7 +17,7 @@ namespace CECS_475___Lab_Assignment_05
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            CECS_475___Lab_Assignment_05.ViewModel.MainWindow window = new CECS_475___Lab_Assignment_05.ViewModel.MainWindow();
+            MainWindow window = new MainWindow();
             EmployeeViewModel VM = new EmployeeViewModel();
             window.DataContext = VM;
             window.Show();

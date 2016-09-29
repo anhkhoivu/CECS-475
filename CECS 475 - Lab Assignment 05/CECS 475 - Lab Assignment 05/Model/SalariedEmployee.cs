@@ -11,6 +11,9 @@ namespace CECS_475___Lab_Assignment_05
     {
         private decimal paymentAmount;
 
+        public SalariedEmployee() : base()
+        { }
+
         /// <summary>
         /// four-parameter constructor 
         /// </summary>

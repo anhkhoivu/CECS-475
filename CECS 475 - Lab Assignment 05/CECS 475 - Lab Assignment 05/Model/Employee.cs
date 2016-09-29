@@ -12,6 +12,7 @@ namespace CECS_475___Lab_Assignment_05
     {
         public delegate bool ComparisonHandler(object first, object second);
 
+        private string tag;
         private string firstName;
         private string lastName;
         private string SSN;
@@ -97,6 +98,22 @@ namespace CECS_475___Lab_Assignment_05
                 OnPropertyChanged("SSN");
             }
         }
+
+        public string Tag
+        {
+            get
+            {
+                return tag;
+            }
+            set
+            {
+                tag = value;
+            }
+        }
+
+        public Employee()
+        { }
+        
 
         /// <summary>
         /// three-parameter constructor
