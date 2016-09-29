@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CECS_475___Lab_Assignment_05
+namespace XML_Test
 {
-    public abstract class Employee : IPayable, IComparable, INotifyPropertyChanged
+    public abstract class Employee : IPayable, IComparable
     {
+        string tag;
         public delegate bool ComparisonHandler(object first, object second);
-
-        private string firstName;
-        private string lastName;
-        private string SSN;
-
         /// <summary>
         /// Class that implements the IComparer interface.
         /// </summary>
@@ -29,14 +24,14 @@ namespace CECS_475___Lab_Assignment_05
             /// <returns>returns the integer comparison between the two parameter objects</returns>
             int IComparer.Compare(object a, object b)
             {
-                Employee e1 = (Employee) a;
-                Employee e2 = (Employee) b;
+                Employee e1 = (Employee)a;
+                Employee e2 = (Employee)b;
                 if (e1.Earnings() > e2.Earnings())
                     return 1;
                 if (e1.Earnings() < e2.Earnings())
                     return -1;
                 else
-                 return 0;
+                    return 0;
             }
 
             /// <summary>
@@ -52,51 +47,35 @@ namespace CECS_475___Lab_Assignment_05
         /// <summary>
         /// read-only property that gets employee's first name
         /// </summary>
-        public string FirstName
-        {
-            get
-            {
-                return firstName;
-            }
-
-            set
-            {
-                firstName = value;
-                OnPropertyChanged("FirstName");
-            }
-        }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// read-only property that gets employee's last name
         /// </summary>
-        public string LastName
-        {
-            get
-            {
-                return lastName;
-            }
-            set
-            {
-                lastName = value;
-                OnPropertyChanged("LastName");
-            }
-        }
+        public string LastName { get; set; }
 
         /// <summary>
         /// read-only property that gets employee's social security number
         /// </summary>
-        public string SocialSecurityNumber
+        public string SocialSecurityNumber { get; set; }
+
+        public string Tag
         {
             get
             {
-                return SSN;
+                return tag;
             }
             set
             {
-                SSN = value;
-                OnPropertyChanged("SSN");
+                tag = value;
+                if (tag == "SalariedEmployee")
+                {
+                    
+                }
             }
         }
+        public Employee()
+        { }
 
         /// <summary>
         /// three-parameter constructor
@@ -110,6 +89,16 @@ namespace CECS_475___Lab_Assignment_05
             LastName = last;
             SocialSecurityNumber = ssn;
         } // end three-parameter Employee constructor
+
+        /// <summary>
+        /// This method displays the Employee's basic information.
+        /// </summary>
+        /// <returns>return string representation of Employee object, using properties</returns>
+        public override string ToString()
+        {
+            return string.Format("{0} {1}\nsocial security number: {2}",
+               FirstName, LastName, SocialSecurityNumber);
+        } // end method ToString
 
         /// <summary>
         /// This method overrides the CompareTo method of IComparable
@@ -132,11 +121,9 @@ namespace CECS_475___Lab_Assignment_05
         /// <param name="first">Parameter that has a Employee object.</param>
         /// <param name="second">Parameter that has a Employee object.</param>
         /// <returns>returns the boolean comparison</returns>
-        public static bool SSN_Comparison(object object1, object object2)
+        public static bool SSN_Comparison(Employee first, Employee second)
         {
             int comparison;
-            Employee first = (Employee)object1;
-            Employee second = (Employee)object2;
             comparison = (first.SocialSecurityNumber.ToString().CompareTo(second.SocialSecurityNumber.ToString()));
 
             return comparison > 0;
@@ -147,16 +134,5 @@ namespace CECS_475___Lab_Assignment_05
         /// </summary>
         /// <returns>returns nothing</returns>
         public abstract decimal Earnings();
-
-        #region INotifyPropertyChanged Members
-        public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
     } // end abstract class Employee
 }

@@ -1,15 +1,35 @@
 ﻿using System;
+using System.Collections;
 using System.Windows.Input;
+using CECS_475___Lab_Assignment_05.Command;
+using System.ComponentModel;
 
 namespace CECS_475___Lab_Assignment_05.ViewModel
 {
-    class EmployeeViewModel
-    { 
-        private IPayable[] payableObjects;
+    class EmployeeViewModel : INotifyPropertyChanged
+    {
+        private IPayable[] payableObjects = new IPayable[8];
+        private ICommand newGrid;
 
         public EmployeeViewModel()
         {
-            payableObjects = new IPayable[8];
+            initializeGrid(payableObjects);
+            DelegateCommand newGrid = new DelegateCommand((p) => reloadGrid(p));
+        }
+
+        public IPayable[] PayableObjects
+        {
+            get
+                { return payableObjects; }
+        }
+
+        public ICommand NewGrid
+        {
+            get { return newGrid; }
+        }
+
+        public void initializeGrid(IPayable[] payableObjects)
+        {
             payableObjects[0] = new SalariedEmployee("John", "Smith", "111-11-1111", 700M);
             payableObjects[1] = new SalariedEmployee("Antonio", "Smith", "555-55-5555", 800M);
             payableObjects[2] = new SalariedEmployee("Victor", "Smith", "444-44-4444", 600M);
@@ -20,118 +40,56 @@ namespace CECS_475___Lab_Assignment_05.ViewModel
             payableObjects[7] = new BasePlusCommissionEmployee("Lee", "Duarte", "888-88-888", 5000M, .04M, 300M);
         }
 
-        public IPayable[] PayableObjects
+        public void reloadGrid(object obj)
         {
-            get
-                { return payableObjects; }
+            Array.Clear(payableObjects, 0, payableObjects.Length);
+            //initializeGrid(payableObjects);
         }
 
-        private ICommand mUpdater;
-        private ICommand updateLastName;
-        private ICommand restore;
-
-        public ICommand UpdateCommand
+        /// <summary>
+        /// Class that implements the IComparer interface.
+        /// </summary>
+        public class PaymentAmountComparer : IComparer
         {
-            get
-            {
-                if (mUpdater == null)
-                    mUpdater = new Updater();
-                return mUpdater;
-            }
-            set
-            {
-                mUpdater = value;
-            }
-        }
+            private static bool order;
 
-        public ICommand SortByLastName
-        {
-            get
+            public PaymentAmountComparer(bool comparison)
             {
-                if (updateLastName == null)
-                    updateLastName = new sortByLastName(new EmployeeViewModel());
-                return updateLastName;
+                order = comparison;
             }
-            set
+            /// <summary>
+            /// This method overrides the Compare method in IComparer to sort by Employee's earnings.
+            /// </summary>
+            /// <param name="a">Parameter that contains a generic object.</param>
+            /// <param name="b">Parameter that contains a generic object.</param>
+            /// <returns>returns the integer comparison between the two parameter objects</returns>
+            int IComparer.Compare(object a, object b)
             {
-                Array.Sort(payableObjects);
+                Employee e1 = (Employee)a;
+                Employee e2 = (Employee)b;
+                if (e1.Earnings() > e2.Earnings())
+                    return 1;
+                if (e1.Earnings() < e2.Earnings())
+                    return -1;
+                else
+                    return 0;
             }
-        }
 
-        public ICommand restoreCommand
-        {
-            get
+            /// <summary>
+            /// This method allows the program to call upon the Compare method in IComparer
+            /// </summary>
+            /// <returns>returns the initialization of the class.</returns>
+            public static IComparer sortPayAscending()
             {
-                if (restore == null)
-                    restore = new restoreOriginal();
-                return restore;
-            }
-            set
-            {
-                new EmployeeViewModel();
+                return (IComparer)new PaymentAmountComparer(order);
             }
         }
 
-        private class Updater : ICommand
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string propertyName)
         {
-            #region ICommand Members
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-            }
-            #endregion
-        }
-
-        private class sortByLastName : ICommand
-        {
-            EmployeeViewModel evm;
-
-            public sortByLastName(EmployeeViewModel newEVM)
-            {
-                evm = newEVM;
-            }
-
-            #region ICommand Members
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-               
-            }
-            #endregion
-        }
-
-        private class restoreOriginal : ICommand
-        {
-            EmployeeViewModel evm = new EmployeeViewModel();
-
-            public restoreOriginal()
-            {
-                
-            }
-
-            #region ICommand Members
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-
-            }
-            #endregion
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
