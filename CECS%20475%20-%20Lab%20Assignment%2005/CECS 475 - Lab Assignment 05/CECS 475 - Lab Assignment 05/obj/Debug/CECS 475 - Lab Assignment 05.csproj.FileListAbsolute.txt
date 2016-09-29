@@ -1,0 +1,14 @@
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\bin\Debug\CECS 475 - Lab Assignment 05.exe.config
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\bin\Debug\CECS 475 - Lab Assignment 05.exe
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\bin\Debug\CECS 475 - Lab Assignment 05.pdb
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS 475 - Lab Assignment 05.csprojResolveAssemblyReference.cache
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\ViewModel\MainWindow.g.cs
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\App.g.cs
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS 475 - Lab Assignment 05_MarkupCompile.cache
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS 475 - Lab Assignment 05_MarkupCompile.lref
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\ViewModel\MainWindow.baml
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS 475 - Lab Assignment 05.g.resources
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS_475___Lab_Assignment_05.Properties.Resources.resources
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS 475 - Lab Assignment 05.csproj.GenerateResource.Cache
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS 475 - Lab Assignment 05.exe
+C:\Users\omid\Documents\Visual Studio 2015\Projects\CECS 475 - Lab Assignment 05\CECS 475 - Lab Assignment 05\obj\Debug\CECS 475 - Lab Assignment 05.pdb
