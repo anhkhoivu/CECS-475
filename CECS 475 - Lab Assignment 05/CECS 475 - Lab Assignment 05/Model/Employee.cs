@@ -113,7 +113,6 @@ namespace CECS_475___Lab_Assignment_05
 
         public Employee()
         { }
-        
 
         /// <summary>
         /// three-parameter constructor

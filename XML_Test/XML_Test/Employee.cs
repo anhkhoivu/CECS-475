@@ -68,12 +68,9 @@ namespace XML_Test
             set
             {
                 tag = value;
-                if (tag == "SalariedEmployee")
-                {
-                    
-                }
             }
         }
+
         public Employee()
         { }
 

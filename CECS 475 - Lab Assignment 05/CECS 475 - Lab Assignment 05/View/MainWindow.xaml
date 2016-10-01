@@ -20,12 +20,18 @@
         <Button Content="Sort By Last Name" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="20.4,45.8,0,0" Name="btnSortLastName" 
                 VerticalAlignment="Top" Width="141"
                 Command="{Binding Path=SortByLastName}" Grid.Column="1"  />
-        <DataGrid ItemsSource="{Binding PayableObjects}" AutoGenerateColumns="False" Margin="34,183,29.6,18.4" Grid.RowSpan="2" Grid.ColumnSpan="2" >
+        <Button Content="Sort by SSC" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,80,0,0" Name="btnSortSSC" 
+                VerticalAlignment="Top" Width="141"
+                Command="{Binding SortSSC}" Grid.Column="1"  />
+        <Button Content="Restore" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,115,0,0" Name="btnRestore" 
+                VerticalAlignment="Top" Width="141"
+                Command="{Binding MyRestore}" Grid.Column="1"  />
+        <DataGrid ItemsSource="{Binding list1, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" Margin="34,183,29.6,18.4" Grid.RowSpan="2" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="First Name" Width="70" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="Last Name" Width="70" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="SSN" Width="100" Binding="{Binding SocialSecurityNumber}"/>
-                <DataGridTextColumn Header="Salary" Width="50" Binding="{Binding Salary}"/>
+                <DataGridTextColumn Header="First Name" Width="70" CanUserSort="False" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Last Name" Width="70" CanUserSort="False" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="SSN" Width="100" CanUserSort="False" Binding="{Binding SocialSecurityNumber, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Salary" Width="50" CanUserSort="False" Binding="{Binding Salary, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
