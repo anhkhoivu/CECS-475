@@ -12,6 +12,11 @@ namespace CECS_475___Lab_Assignment_05
         private decimal grossSales; // gross weekly sales
         private decimal commissionRate; // commission percentage
 
+        public override decimal GetPaymentAmount()
+        {
+            return CommissionRate * GrossSales;
+        } // end method Earnings  
+
         /// <summary>
         /// five-parameter constructor for CommissionEmployee
         /// </summary>

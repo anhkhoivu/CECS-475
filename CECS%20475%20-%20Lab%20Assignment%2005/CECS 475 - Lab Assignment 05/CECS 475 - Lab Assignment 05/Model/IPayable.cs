@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace CECS_475___Lab_Assignment_05
 {
-    interface IPayable
+    /*interface IPayable
     {
         decimal Earnings();
-    }
+    }*/
+    public interface IPayable : IComparable
+    {
+        decimal GetPaymentAmount(); // calculate payment; no implementation
+    } // end interface IPayable
 }

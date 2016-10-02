@@ -11,7 +11,14 @@ namespace CECS_475___Lab_Assignment_05
     {
         private decimal wage; // wage per hour
         private decimal hours; // hours worked for the week
-        
+        public override decimal GetPaymentAmount()
+        {
+            if (Hours <= 40) // no overtime                          
+                return Wage * Hours;
+            else
+                return (40 * Wage) + ((Hours - 40) * Wage * 1.5M);
+        } // end method Earnings     
+
         /// <summary>
         /// 5 parameter constructor for HourlyEmployee
         /// </summary>

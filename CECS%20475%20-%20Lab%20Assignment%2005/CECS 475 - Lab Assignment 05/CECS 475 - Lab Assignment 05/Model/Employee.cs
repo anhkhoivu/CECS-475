@@ -16,6 +16,7 @@ namespace CECS_475___Lab_Assignment_05
         private string lastName;
         private string SSN;
 
+        abstract public decimal GetPaymentAmount();
         /// <summary>
         /// Class that implements the IComparer interface.
         /// </summary>
@@ -138,6 +139,28 @@ namespace CECS_475___Lab_Assignment_05
             comparison = (first.SocialSecurityNumber.ToString().CompareTo(second.SocialSecurityNumber.ToString()));
 
             return comparison > 0;
+        }
+        public static IComparer sortAscending()
+        {
+            return (IComparer)new sortAscendingHelper();
+        }
+
+        /// <summary>
+        /// sorting the pay amount
+        /// </summary>
+        private class sortAscendingHelper : IComparer
+        {
+            int IComparer.Compare(object x, object y)
+            {
+                Employee c1 = (Employee)x;
+                Employee c2 = (Employee)y;
+                if (c1.GetPaymentAmount() > c2.GetPaymentAmount())
+                    return 1;
+                if (c1.GetPaymentAmount() < c2.GetPaymentAmount())
+                    return -1;
+                else
+                    return 0;
+            }
         }
 
         /// <summary>

@@ -18,15 +18,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Button Content="Update" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="21.4,11.8,0,0" Name="btnUpdate" 
+        <Button Content="Sort By Last Name" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="21.4,11.8,0,0" Name="btnUpdate" 
                 VerticalAlignment="Top" Width="141"
-                Command="{Binding MyUpdater}" Grid.Column="1"  />
-        <Button Content="Sort By Last Name" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="20.4,45.8,0,0" Name="btnSortLastName" 
+                Command="{Binding MyLname}" Grid.Column="1"  />        
+        <Button Content="Sort By Pay Amount" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="20.4,45.8,0,0" Name="btnSortLastName" 
                 VerticalAlignment="Top" Width="141"
-                Command="{Binding Path=SortByLastName}" Grid.Column="1"  />
+                Command="{Binding MyPay}" Grid.Column="1"  />
         <Button Content="Sort by SSC" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,80,0,0" Name="btnSortSSC" 
                 VerticalAlignment="Top" Width="141"
-                Command="{Binding SortSSC}" Grid.Column="1"  />
+                Command="{Binding MySSC}" Grid.Column="1"  />
         <Button Content="Restore" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,115,0,0" Name="btnRestore" 
                 VerticalAlignment="Top" Width="141"
                 Command="{Binding MyRestore}" Grid.Column="1"  />

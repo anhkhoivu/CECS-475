@@ -7,61 +7,50 @@ using System.Threading.Tasks;
 
 namespace CECS_475___Lab_Assignment_05
 {
-    class SalariedEmployee : Employee, INotifyPropertyChanged
-    {
-        private decimal paymentAmount;
-
-        /// <summary>
-        /// four-parameter constructor 
-        /// </summary>
-        /// <param name="first">Parameter that takes the first name of an employee.</param>
-        /// <param name="last">Parameter that takes the last name of an employee</param>
-        /// <param name="ssn">Parameter that takes the SNN of an Employee.</param>
-        /// <param name="salary">Parameter that takes in the salary of an Employee.</param>
-        public SalariedEmployee(string first, string last, string ssn,
-           decimal salary) : base(first, last, ssn)
+        public class SalariedEmployee : Employee
         {
-            GetPaymentAmount = salary; // validate salary via property
-        } // end four-parameter SalariedEmployee constructor
+            private decimal weeklySalary;
 
-        /// <summary>
-        /// property that gets and sets salaried employee's salary
-        /// </summary>
-        public decimal GetPaymentAmount
-        {
-            get
+            // four-parameter constructor
+            public SalariedEmployee(string first, string last, string ssn,
+               decimal salary) : base(first, last, ssn)
             {
-                return paymentAmount;
-            } // end get
-            set
-            {
-                if (value >= 0) // validation
-                    paymentAmount = value;
-                else
-                    throw new ArgumentOutOfRangeException("WeeklySalary",
-                       value, "WeeklySalary must be >= 0");
-            } // end set
-        } // end property WeeklySalary
+                WeeklySalary = salary; // validate salary via property
+            } // end four-parameter SalariedEmployee constructor
 
-        public decimal Salary
-        {
-            get
+            // property that gets and sets salaried employee's salary
+            public decimal WeeklySalary
             {
-                return Earnings();
-            }
-            set
-            {
-                OnPropertyChanged("Salary");
-            }
-        }
+                get
+                {
+                    return weeklySalary;
+                } // end get
+                set
+                {
+                    if (value >= 0) // validation
+                        weeklySalary = value;
+                    else
+                        throw new ArgumentOutOfRangeException("WeeklySalary",
+                           value, "WeeklySalary must be >= 0");
+                } // end set
+            } // end property WeeklySalary
 
-        /// <summary>
-        /// This method returns the amount that an Emyploee earns.
-        /// </summary>
-        /// <returns>returns the amount that an Employee earned.</returns>
         public override decimal Earnings()
         {
-            return paymentAmount;
+            throw new NotImplementedException();
         }
+
+        // calculate earnings; override abstract method Earnings in Employee
+        public override decimal GetPaymentAmount()
+            {
+                return WeeklySalary;
+            } // end method Earnings          
+
+            // return string representation of SalariedEmployee object
+            public override string ToString()
+            {
+                return string.Format("salaried employee: {0}\n{1}: {2:C}",
+                   base.ToString(), "weekly salary", WeeklySalary);
+            } // end method ToString                                      
+        } // end class SalariedEmployee
     }
-}
