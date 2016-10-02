@@ -39,9 +39,10 @@ namespace CECS_475___Lab_Assignment_05
             dataGrid1.ItemsSource = evm.List1;
         }
 
-        private void sortByLastName(object sender, RoutedEventArgs e)
+        private void sortByLastName_Changed(object sender, RoutedEventArgs e)
         {
-
+            dataGrid1.ItemsSource = evm.List1;
+            CollectionViewSource.GetDefaultView(dataGrid1.ItemsSource).Refresh();
         }
         
     }

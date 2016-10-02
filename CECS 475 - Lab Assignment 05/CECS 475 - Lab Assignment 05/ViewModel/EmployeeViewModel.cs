@@ -18,6 +18,7 @@ namespace CECS_475___Lab_Assignment_05
         
         //restore components
         private ICommand myRestore;
+        private ICommand sortByLastName;
         public ICommand MyRestore
         {
             get
@@ -35,8 +36,21 @@ namespace CECS_475___Lab_Assignment_05
             }
             
         }
-
         //end of restore components
+
+        public ICommand SortByLastName
+        {
+            get
+            {
+                return sortByLastName;
+            }
+        }
+
+        private void sortByLastNameFxn(object o)
+        {
+            Array.Sort(payableObjects);
+            ReloadListCollection(payableObjects);
+        }
         //end of ssc sort components
 
         public EmployeeViewModel()
@@ -50,6 +64,8 @@ namespace CECS_475___Lab_Assignment_05
             {
                 list1.Add(e);
             }
+
+            sortByLastName = new DelegateCommand((p) => sortByLastNameFxn(p));
             myRestore = new DelegateCommand((p) => MyRestorefxn(p));
         }
 
@@ -66,9 +82,13 @@ namespace CECS_475___Lab_Assignment_05
             { return list1; }
         }
 
-        public void loadList()
+        private void ReloadListCollection(IPayable[] payableObjects)
         {
-           
+            list1.Clear();
+            foreach (Employee e in payableObjects)
+            {
+                list1.Add(e);
+            }
         }
 
         public void loadXMLFile(List<Employee> list)

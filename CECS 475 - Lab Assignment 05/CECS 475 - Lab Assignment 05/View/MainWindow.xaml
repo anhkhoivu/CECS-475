@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500">
     <Window.Resources>
-        <local:List1 x:Key="List1" />
+        <local:List1 x:Key="List1" x:Shared="false" />
 
         <CollectionViewSource x:Key="cvsTasks" Source="{StaticResource List1}">
         </CollectionViewSource>
@@ -28,7 +28,7 @@
                 Command="{Binding Path=SortByLastName}" Grid.Column="1"  />
         <Button Content="Sort by SSC" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,80,0,0" Name="btnSortSSC" 
                 VerticalAlignment="Top" Width="141"
-                Command="{Binding SortSSC}" Grid.Column="1"  />
+                Command="{Binding SortSSC}" Click="sortByLastName_Changed" Grid.Column="1"  />
         <Button Content="Restore" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,115,0,0" Name="btnRestore" 
                 VerticalAlignment="Top" Width="141"
                 Command="{Binding MyRestore}" Click="CompleteFilter_Changed" Grid.Column="1"  />
