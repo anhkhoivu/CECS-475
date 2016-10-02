@@ -57,8 +57,16 @@ namespace CECS_475___Lab_Assignment_05
 
         private void sortByLastNameFxn(object o)
         {
-            Array.Sort(payableObjects);
-            ReloadListCollection(payableObjects);
+            if (selectedSorting == SortingOrder.Ascending)
+            {
+                Array.Sort(payableObjects);
+                ReloadListCollection(payableObjects);
+            }
+            else if (selectedSorting == SortingOrder.Descending)
+            {
+                Array.Sort(payableObjects);
+                ReloadDescendingListCollection(payableObjects);
+            }
         }
         //end of ssc sort components
 
@@ -212,6 +220,15 @@ namespace CECS_475___Lab_Assignment_05
             foreach (Employee e in payableObjects)
             {
                 list1.Add(e);
+            }
+        }
+
+        private void ReloadDescendingListCollection(IPayable[] payableObjects)
+        {
+            list1.Clear();
+            for (int i = 7; i >= 0; i--)
+            {
+                list1.Add((Employee)payableObjects[i]);
             }
         }
 
