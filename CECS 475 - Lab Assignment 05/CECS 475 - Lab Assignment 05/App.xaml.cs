@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using CECS_475___Lab_Assignment_05.ViewModel;
 
 namespace CECS_475___Lab_Assignment_05
 {
@@ -14,10 +14,11 @@ namespace CECS_475___Lab_Assignment_05
     /// </summary>
     public partial class App : Application
     {
+        MainWindow window = new MainWindow();
+        //ObservableCollection<Employee> view = new ObservableCollection<Employee>();
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow window = new MainWindow();
             EmployeeViewModel VM = new EmployeeViewModel();
             window.DataContext = VM;
             window.Show();

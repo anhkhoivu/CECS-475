@@ -1,4 +1,4 @@
-﻿<Window x:Class="CECS_475___Lab_Assignment_05.ViewModel.MainWindow"
+﻿<Window x:Class="CECS_475___Lab_Assignment_05.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +7,12 @@
         xmlns:scm="clr-namespace:CECS_475___Lab_Assignment_05"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500">
+    <Window.Resources>
+        <local:List1 x:Key="List1" />
+
+        <CollectionViewSource x:Key="cvsTasks" Source="{StaticResource List1}">
+        </CollectionViewSource>
+    </Window.Resources>
     <Grid Margin="0,0,0,20" Name="UserGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="147*"/>
@@ -25,8 +31,8 @@
                 Command="{Binding SortSSC}" Grid.Column="1"  />
         <Button Content="Restore" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,115,0,0" Name="btnRestore" 
                 VerticalAlignment="Top" Width="141"
-                Command="{Binding MyRestore}" Grid.Column="1"  />
-        <DataGrid ItemsSource="{Binding list1, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" Margin="34,183,29.6,18.4" Grid.RowSpan="2" Grid.ColumnSpan="2" >
+                Command="{Binding MyRestore}" Click="CompleteFilter_Changed" Grid.Column="1"  />
+        <DataGrid x:Name="dataGrid1" ItemsSource="{Binding List1, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" Margin="34,183,29.6,18.4" Grid.RowSpan="2" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="First Name" Width="70" CanUserSort="False" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Last Name" Width="70" CanUserSort="False" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
