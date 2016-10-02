@@ -37,7 +37,18 @@ namespace CECS_475___Lab_Assignment_05
             dataGrid1.ItemsSource = view;
             CollectionViewSource.GetDefaultView(dataGrid1.ItemsSource).Refresh();
             dataGrid1.ItemsSource = evm.List1;
-            MessageBox.Show("test button clicked");
+        }
+
+        private void selection_Changed(object sender, RoutedEventArgs e)
+        {
+            if (cmb.SelectedItem == i1)
+            {
+                EmployeeViewModel.SelectedSorting = SortingOrder.Ascending;
+            }
+            else if (cmb.SelectedItem == i2)
+            {
+                EmployeeViewModel.SelectedSorting = SortingOrder.Descending;
+            }
         }
         /*
         private void sortByLastName_Changed(object sender, RoutedEventArgs e)

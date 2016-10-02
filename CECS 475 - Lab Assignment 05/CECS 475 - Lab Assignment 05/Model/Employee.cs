@@ -20,7 +20,7 @@ namespace CECS_475___Lab_Assignment_05
         /// <summary>
         /// Class that implements the IComparer interface.
         /// </summary>
-        public class sortByPay : IComparer
+        public class sortByPayAscending : IComparer
         {
             /// <summary>
             /// This method overrides the Compare method in IComparer to sort by Employee's earnings.
@@ -46,7 +46,40 @@ namespace CECS_475___Lab_Assignment_05
             /// <returns>returns the initialization of the class.</returns>
             public static IComparer sortPayAscending()
             {
-                return (IComparer)new sortByPay();
+                return (IComparer)new sortByPayAscending();
+            }
+        }
+
+        /// <summary>
+        /// Class that implements the IComparer interface.
+        /// </summary>
+        public class sortByPayDescending : IComparer
+        {
+            /// <summary>
+            /// This method overrides the Compare method in IComparer to sort by Employee's earnings.
+            /// </summary>
+            /// <param name="a">Parameter that contains a generic object.</param>
+            /// <param name="b">Parameter that contains a generic object.</param>
+            /// <returns>returns the integer comparison between the two parameter objects</returns>
+            int IComparer.Compare(object a, object b)
+            {
+                Employee e1 = (Employee)a;
+                Employee e2 = (Employee)b;
+                if (e1.Earnings() > e2.Earnings())
+                    return -1;
+                if (e1.Earnings() < e2.Earnings())
+                    return 1;
+                else
+                    return 0;
+            }
+
+            /// <summary>
+            /// This method allows the program to call upon the Compare method in IComparer
+            /// </summary>
+            /// <returns>returns the initialization of the class.</returns>
+            public static IComparer sortPayDescending()
+            {
+                return (IComparer)new sortByPayDescending();
             }
         }
 

@@ -1,22 +1,27 @@
 ﻿using System;
-using System.Collections;
 using System.Windows.Input;
-using CECS_475___Lab_Assignment_05.Command;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
 
 namespace CECS_475___Lab_Assignment_05
 {
+    public enum SortingOrder
+    {
+        [Description("Ascending")]
+        Ascending = 1,
+        [Description("Descending")]
+        Descending = 2
+    }
+
     class EmployeeViewModel
     {
         private IPayable[] payableObjects;
         private ObservableCollection<Employee> list1;
         private List<Employee> list;
-        public delegate bool ComparisonHandler(object first, object second);
-
+        public delegate bool ComparisonHandler(object first, object second, bool comparison);
+    
         //restore components
         private ICommand myRestore;
         private ICommand sortByLastName;
@@ -67,8 +72,16 @@ namespace CECS_475___Lab_Assignment_05
 
         private void sortByPayFxn(object o)
         {
-            Array.Sort(payableObjects, Employee.sortByPay.sortPayAscending());
-            ReloadListCollection(payableObjects);
+            if (selectedSorting == SortingOrder.Ascending)
+            {
+                Array.Sort(payableObjects, Employee.sortByPayAscending.sortPayAscending());
+                ReloadListCollection(payableObjects);
+            }
+            else if (selectedSorting == SortingOrder.Descending)
+            {
+                Array.Sort(payableObjects, Employee.sortByPayDescending.sortPayDescending());
+                ReloadListCollection(payableObjects);
+            }
         }
 
         public ICommand SortBySSN
@@ -81,21 +94,43 @@ namespace CECS_475___Lab_Assignment_05
 
         private void sortBySSNFxn(object o)
         {
-            selectionSort(payableObjects, SSN_Comparision);
-            ReloadListCollection(payableObjects);
+            bool isAscending;
+            if (selectedSorting == SortingOrder.Ascending)
+            {
+                isAscending = true;
+                selectionSort(payableObjects, SSN_Comparision, isAscending);
+                ReloadListCollection(payableObjects);
+            }
+            else if (selectedSorting == SortingOrder.Descending)
+            {
+                isAscending = false;
+                selectionSort(payableObjects, SSN_Comparision, isAscending);
+                ReloadListCollection(payableObjects);
+            }
         }
 
-        public static bool SSN_Comparision(object first, object second)
+        public static bool SSN_Comparision(object first, object second, bool isAscending)
         {
             int comparison;
             Employee e1 = (Employee)first;
             Employee e2 = (Employee)second;
-            comparison = (e2.SocialSecurityNumber.ToString().CompareTo(e1.SocialSecurityNumber.ToString()));
-
-            return comparison > 0;
+            if (isAscending)
+            {
+                comparison = (e2.SocialSecurityNumber.ToString().CompareTo(e1.SocialSecurityNumber.ToString()));
+                return comparison > 0;
+            }
+            else if (!isAscending)
+            {
+                comparison = (e1.SocialSecurityNumber.ToString().CompareTo(e2.SocialSecurityNumber.ToString()));
+                return comparison > 0;
+            }
+            else
+            {
+                return true;
+            }
         }
 
-        static void selectionSort(object[] arr, ComparisonHandler comparison)
+        static void selectionSort(object[] arr, ComparisonHandler comparison, bool isAscending)
         {
             //pos_min is short for position of min
             int pos_min;
@@ -107,7 +142,7 @@ namespace CECS_475___Lab_Assignment_05
 
                 for (int j = i + 1; j < arr.Length; j++)
                 {
-                    if (comparison(arr[j], arr[pos_min]))
+                    if (comparison(arr[j], arr[pos_min], isAscending))
                     {
                         //pos_min will keep track of the index that min is in, this is needed when a swap happens
                         pos_min = j;
@@ -123,6 +158,22 @@ namespace CECS_475___Lab_Assignment_05
                 }
             }
         }
+
+        private static SortingOrder selectedSorting = SortingOrder.Ascending; // Default is set to 'Ascending'
+        public static SortingOrder SelectedSorting
+        {
+            get 
+            {
+                return selectedSorting;
+            }
+            set
+            {
+                selectedSorting = value;
+            }
+        }
+
+        public delegate int SortSSNDelegate(object obj1, object obj2, bool isAscending);
+        public SortSSNDelegate sortDelegate = null;
 
         public EmployeeViewModel()
         {
