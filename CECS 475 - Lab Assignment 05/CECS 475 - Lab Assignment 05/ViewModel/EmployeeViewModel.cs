@@ -19,6 +19,8 @@ namespace CECS_475___Lab_Assignment_05
         //restore components
         private ICommand myRestore;
         private ICommand sortByLastName;
+        private ICommand sortByPay;
+
         public ICommand MyRestore
         {
             get
@@ -53,6 +55,20 @@ namespace CECS_475___Lab_Assignment_05
         }
         //end of ssc sort components
 
+        public ICommand SortByPay
+        {
+            get
+            {
+                return sortByPay;
+            }
+        }
+
+        private void sortByPayFxn(object o)
+        {
+            Array.Sort(payableObjects, Employee.sortByPay.sortPayAscending());
+            ReloadListCollection(payableObjects);
+        }
+
         public EmployeeViewModel()
         {
             payableObjects = new IPayable[8];
@@ -66,6 +82,7 @@ namespace CECS_475___Lab_Assignment_05
             }
 
             sortByLastName = new DelegateCommand((p) => sortByLastNameFxn(p));
+            sortByPay = new DelegateCommand((p) => sortByPayFxn(p));
             myRestore = new DelegateCommand((p) => MyRestorefxn(p));
         }
 

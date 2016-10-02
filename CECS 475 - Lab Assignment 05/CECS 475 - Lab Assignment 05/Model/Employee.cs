@@ -139,7 +139,7 @@ namespace CECS_475___Lab_Assignment_05
             {
                 return String.Compare(e1.FirstName, this.FirstName);
             }
-            return String.Compare(e1.LastName, this.LastName);
+            return String.Compare(this.LastName, e1.LastName);
         }
 
         /// <summary>

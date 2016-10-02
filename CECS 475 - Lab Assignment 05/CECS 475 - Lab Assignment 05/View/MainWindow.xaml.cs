@@ -44,7 +44,12 @@ namespace CECS_475___Lab_Assignment_05
             dataGrid1.ItemsSource = evm.List1;
             CollectionViewSource.GetDefaultView(dataGrid1.ItemsSource).Refresh();
         }
-        
+
+        private void sortByPay_Changed(object sender, RoutedEventArgs e)
+        {
+            dataGrid1.ItemsSource = evm.List1;
+            CollectionViewSource.GetDefaultView(dataGrid1.ItemsSource).Refresh();
+        }
     }
 
     // Requires using System.Collections.ObjectModel;
