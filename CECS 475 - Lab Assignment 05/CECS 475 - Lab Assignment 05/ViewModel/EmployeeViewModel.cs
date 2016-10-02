@@ -15,11 +15,13 @@ namespace CECS_475___Lab_Assignment_05
         private IPayable[] payableObjects;
         private ObservableCollection<Employee> list1;
         private List<Employee> list;
-        
+        public delegate bool ComparisonHandler(object first, object second);
+
         //restore components
         private ICommand myRestore;
         private ICommand sortByLastName;
         private ICommand sortByPay;
+        private ICommand sortBySSN;
 
         public ICommand MyRestore
         {
@@ -69,6 +71,59 @@ namespace CECS_475___Lab_Assignment_05
             ReloadListCollection(payableObjects);
         }
 
+        public ICommand SortBySSN
+        {
+            get
+            {
+                return sortBySSN;
+            }
+        }
+
+        private void sortBySSNFxn(object o)
+        {
+            selectionSort(payableObjects, SSN_Comparision);
+            ReloadListCollection(payableObjects);
+        }
+
+        public static bool SSN_Comparision(object first, object second)
+        {
+            int comparison;
+            Employee e1 = (Employee)first;
+            Employee e2 = (Employee)second;
+            comparison = (e2.SocialSecurityNumber.ToString().CompareTo(e1.SocialSecurityNumber.ToString()));
+
+            return comparison > 0;
+        }
+
+        static void selectionSort(object[] arr, ComparisonHandler comparison)
+        {
+            //pos_min is short for position of min
+            int pos_min;
+            object temp;
+
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                pos_min = i;//set pos_min to the current index of array
+
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    if (comparison(arr[j], arr[pos_min]))
+                    {
+                        //pos_min will keep track of the index that min is in, this is needed when a swap happens
+                        pos_min = j;
+                    }
+                }
+
+                //if pos_min no longer equals i than a smaller value must have been found, so a swap must occur
+                if (pos_min != i)
+                {
+                    temp = arr[i];
+                    arr[i] = arr[pos_min];
+                    arr[pos_min] = temp;
+                }
+            }
+        }
+
         public EmployeeViewModel()
         {
             payableObjects = new IPayable[8];
@@ -83,6 +138,7 @@ namespace CECS_475___Lab_Assignment_05
 
             sortByLastName = new DelegateCommand((p) => sortByLastNameFxn(p));
             sortByPay = new DelegateCommand((p) => sortByPayFxn(p));
+            sortBySSN = new DelegateCommand((p) => sortBySSNFxn(p));
             myRestore = new DelegateCommand((p) => MyRestorefxn(p));
         }
 
