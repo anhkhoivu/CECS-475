@@ -15,7 +15,6 @@ namespace CECS_475___Lab_Assignment_05
     public partial class App : Application
     {
         MainWindow window = new MainWindow();
-        //ObservableCollection<Employee> view = new ObservableCollection<Employee>();
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
