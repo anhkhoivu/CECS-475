@@ -68,16 +68,8 @@ namespace CECS_475___Lab_Assignment_06___Part_A
         {
             if (selectedSorting == SortingOrder.Ascending)
             {
-                /*
                 Array.Sort(payableObjects);
                 ReloadListCollection(payableObjects);
-                */
-                using (var ctx)
-                {
-                    var student1 = from s in ctx.Students
-                                   orderby s.StudentName ascending
-                                   select s;
-                }
             }
             else if (selectedSorting == SortingOrder.Descending)
             {
