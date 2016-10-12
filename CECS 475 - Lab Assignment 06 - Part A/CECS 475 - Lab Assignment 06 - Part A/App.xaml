@@ -1,0 +1,8 @@
+﻿<Application x:Class="CECS_475___Lab_Assignment_06___Part_A.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CECS_475___Lab_Assignment_06___Part_A">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
