@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Collections.ObjectModel;
 
-namespace CECS_475___Lab_Assignment_05
+namespace CECS_475___Lab_Assignment_06___Part_A
 {
     /// <summary>
     /// Enum for sorting order of employees.
