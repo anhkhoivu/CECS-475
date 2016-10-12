@@ -1,0 +1,52 @@
+﻿<Window x:Class="CECS_475___Lab_Assignment_06___Part_A.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CECS_475___Lab_Assignment_06___Part_A"
+        mc:Ignorable="d"
+       Title="MainWindow" Height="500" Width="500">
+
+    <Window.Resources>
+        <local:EmployeeRoster x:Key="EmployeeRoster" x:Shared="false" />
+        <CollectionViewSource x:Key="cvsTasks" Source="{StaticResource EmployeeRoster}">
+        </CollectionViewSource>
+    </Window.Resources>
+    <Grid Margin="0,0,0,20" Name="UserGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="147*"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Content="Sort By Last Name" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="17.4,12,0,0" Name="btnSortLastName" 
+                VerticalAlignment="Top" Width="141"
+                Command="{Binding Path=SortByLastName}" Grid.Column="1"  />
+        <Button Content="Sort by Pay" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="18.4,47,0,0" Name="btnSortPay" 
+                VerticalAlignment="Top" Width="141"
+                Command="{Binding Path=SortByPay}" Grid.Column="1"  />
+        <Button Content="Sort by SSN" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,80,0,0" Name="btnSortSSN" 
+                VerticalAlignment="Top" Width="141"
+                Command="{Binding Path=SortBySSN}" Grid.Column="1"  />
+        <Button Content="Restore" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="19.4,115,0,0" Name="btnRestore" 
+                VerticalAlignment="Top" Width="141"
+                Command="{Binding Path=MyRestore}" Grid.Column="1"  />
+        <DataGrid x:Name="dataGrid1" ItemsSource="{Binding EmployeeRoster, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" AutoGenerateColumns="False" Margin="34,183,29.6,18.4" Grid.RowSpan="2" Grid.ColumnSpan="2" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First Name" Width="100" CanUserSort="False" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Last Name" Width="100" CanUserSort="False" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="SSN" Width="100" CanUserSort="False" Binding="{Binding SocialSecurityNumber, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Salary" Width="120" CanUserSort="False" Binding="{Binding Salary, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ComboBox Name="cmb" Margin="11,25,81.6,394.4" Grid.Row="1"
+                  ItemsSource="{Binding SortingOrder}" SelectionChanged="selection_Changed">
+            <ComboBoxItem Name="i1" IsSelected="True">Ascending</ComboBoxItem>
+            <ComboBoxItem Name="i2">Descending</ComboBoxItem>
+        </ComboBox>
+    </Grid>
+</Window>
