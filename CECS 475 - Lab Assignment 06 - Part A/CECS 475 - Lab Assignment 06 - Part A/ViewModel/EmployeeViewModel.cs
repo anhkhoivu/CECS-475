@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Xml;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CECS_475___Lab_Assignment_06___Part_A
 {
@@ -68,13 +69,19 @@ namespace CECS_475___Lab_Assignment_06___Part_A
         {
             if (selectedSorting == SortingOrder.Ascending)
             {
-                Array.Sort(payableObjects);
-                ReloadListCollection(payableObjects);
+                var empQuery =
+                    from emp in originalList
+                    orderby emp.LastName ascending
+                    select emp;
+                ReloadListCollection(empQuery);
             }
             else if (selectedSorting == SortingOrder.Descending)
             {
-                Array.Sort(payableObjects);
-                ReloadDescendingListCollection(payableObjects);
+                var empQuery =
+                      from emp in originalList
+                      orderby emp.LastName descending
+                      select emp;
+                ReloadListCollection(empQuery);
             }
         }
         //end of ssc sort components
@@ -91,13 +98,21 @@ namespace CECS_475___Lab_Assignment_06___Part_A
         {
             if (selectedSorting == SortingOrder.Ascending)
             {
-                Array.Sort(payableObjects, Employee.sortByPayAscending.sortPayAscending());
-                ReloadListCollection(payableObjects);
+                var empQuery =
+                    from emp in originalList
+                    orderby emp.Earnings() ascending
+                    select emp;
+
+                ReloadListCollection(empQuery);
             }
             else if (selectedSorting == SortingOrder.Descending)
             {
-                Array.Sort(payableObjects, Employee.sortByPayDescending.sortPayDescending());
-                ReloadListCollection(payableObjects);
+                var empQuery =
+                     from emp in originalList
+                     orderby emp.Earnings() descending
+                     select emp;
+
+                ReloadListCollection(empQuery);
             }
         }
 
@@ -108,74 +123,29 @@ namespace CECS_475___Lab_Assignment_06___Part_A
                 return sortBySSN;
             }
         }
-
+        
         private void sortBySSNFxn(object o)
         {
-            bool isAscending;
             if (selectedSorting == SortingOrder.Ascending)
             {
-                isAscending = true;
-                selectionSort(payableObjects, SSN_Comparision, isAscending);
-                ReloadListCollection(payableObjects);
+                var empQuery =
+                    from emp in originalList
+                    orderby emp.SocialSecurityNumber ascending
+                    select emp;
+
+                ReloadListCollection(empQuery);
             }
             else if (selectedSorting == SortingOrder.Descending)
             {
-                isAscending = false;
-                selectionSort(payableObjects, SSN_Comparision, isAscending);
-                ReloadListCollection(payableObjects);
+                var empQuery =
+                    from emp in originalList
+                    orderby emp.SocialSecurityNumber descending
+                    select emp;
+
+                ReloadListCollection(empQuery);
             }
         }
-
-        public static bool SSN_Comparision(object first, object second, bool isAscending)
-        {
-            int comparison;
-            Employee e1 = (Employee)first;
-            Employee e2 = (Employee)second;
-            if (isAscending)
-            {
-                comparison = (e2.SocialSecurityNumber.ToString().CompareTo(e1.SocialSecurityNumber.ToString()));
-                return comparison > 0;
-            }
-            else if (!isAscending)
-            {
-                comparison = (e1.SocialSecurityNumber.ToString().CompareTo(e2.SocialSecurityNumber.ToString()));
-                return comparison > 0;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        static void selectionSort(object[] arr, ComparisonHandler comparison, bool isAscending)
-        {
-            //pos_min is short for position of min
-            int pos_min;
-            object temp;
-
-            for (int i = 0; i < arr.Length - 1; i++)
-            {
-                pos_min = i;//set pos_min to the current index of array
-
-                for (int j = i + 1; j < arr.Length; j++)
-                {
-                    if (comparison(arr[j], arr[pos_min], isAscending))
-                    {
-                        //pos_min will keep track of the index that min is in, this is needed when a swap happens
-                        pos_min = j;
-                    }
-                }
-
-                //if pos_min no longer equals i than a smaller value must have been found, so a swap must occur
-                if (pos_min != i)
-                {
-                    temp = arr[i];
-                    arr[i] = arr[pos_min];
-                    arr[pos_min] = temp;
-                }
-            }
-        }
-
+ 
         private static SortingOrder selectedSorting = SortingOrder.Ascending; // Default is set to 'Ascending'
         public static SortingOrder SelectedSorting
         {
@@ -188,9 +158,6 @@ namespace CECS_475___Lab_Assignment_06___Part_A
                 selectedSorting = value;
             }
         }
-
-        public delegate int SortSSNDelegate(object obj1, object obj2, bool isAscending);
-        public SortSSNDelegate sortDelegate = null;
 
         /// <summary>
         /// Default constructor for EmployeeViewModel
@@ -231,21 +198,12 @@ namespace CECS_475___Lab_Assignment_06___Part_A
             { return employeeRoster; }
         }
 
-        private void ReloadListCollection(IPayable[] payableObjects)
+        private void ReloadListCollection(IEnumerable<Employee> payableObjects)
         {
             employeeRoster.Clear();
             foreach (Employee e in payableObjects)
             {
                 employeeRoster.Add(e);
-            }
-        }
-
-        private void ReloadDescendingListCollection(IPayable[] payableObjects)
-        {
-            employeeRoster.Clear();
-            for (int i = 7; i >= 0; i--)
-            {
-                employeeRoster.Add((Employee)payableObjects[i]);
             }
         }
 
