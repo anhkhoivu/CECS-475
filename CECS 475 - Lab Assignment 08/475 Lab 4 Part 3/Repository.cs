@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace _475_Lab_4_Part_3
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class
     {
         protected DbContext context;
         protected DbSet<T> entitySet;
@@ -23,11 +23,16 @@ namespace _475_Lab_4_Part_3
             context.SaveChanges();
         }
 
-        public void Insert(T entity)
+        public void Insert(params T[] items)
         {
-            //Use the context object and entity state to save the entity
-            context.Entry(entity).State = EntityState.Added;
-            context.SaveChanges();
+            using (var context = new SchoolDBEntities())
+            {
+                foreach (T item in items)
+                {
+                    context.Entry(item).State = EntityState.Added;
+                    context.SaveChanges();
+                }
+            }
         }
 
         public void Delete(T entity)
@@ -54,9 +59,24 @@ namespace _475_Lab_4_Part_3
             return entitySet.Where(predicate);
         }
         
-        public IEnumerable<T> GetAll()
+        public virtual IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
         {
-            return entitySet;
+            IList<T> list;
+            using (var context = new SchoolDBEntities())
+            {
+                IQueryable<T> dbQuery = context.Set<T>();
+
+                //Apply eager loading
+                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+                {
+                    dbQuery = dbQuery.Include<T, object>(navigationProperty);
+                }
+
+                list = dbQuery
+                    .AsNoTracking()
+                    .ToList<T>();
+            }
+            return list;
         }
 
         // Flag: Has Dispose already been called?
@@ -91,7 +111,6 @@ namespace _475_Lab_4_Part_3
             Dispose(false);
         }
 
-        public T GetSingle(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
         //This method will find the related records by passing two argument
         //First argument: lambda expression to search a record such as d => d.StandardName.Equals(standardName) to search am record by standard name
         //Second argument: navigation property that leads to the related records such as d => d.Students
@@ -101,6 +120,7 @@ namespace _475_Lab_4_Part_3
         //{
         //return _standardRepository.GetSingle(d => d.StandardName.Equals(standardName), d => d.Students);
         //} 
+        public T GetSingle(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
         {
             T item = null;
             IQueryable<T> dbQuery = null;

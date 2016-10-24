@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _475_Lab_4_Part_3
 {
-    interface IStudentRepository : IRepository<Student>
+    public interface IStudentRepository : IRepository<Student>
     {
     }
 }

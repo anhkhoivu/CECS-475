@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace _475_Lab_4_Part_3
 {
-    interface IRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable
     {
-        void Insert(T entity);
+        void Insert(params T[] items);
         void Delete(T entity);
         void Update(T entity);
         T GetById(T id);
         IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
-        IEnumerable<T> GetAll();
+        IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties);
+        //IEnumerable<T> GetQuery();
         T GetSingle(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties);
     }
 }

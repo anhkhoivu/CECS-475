@@ -18,6 +18,13 @@ namespace _475_Lab_4_Part_3
         {
             this.Students = new HashSet<Student>();
         }
+
+        public Course(string name, int id)
+        {
+            this.Students = new HashSet<Student>();
+            CourseName = name;
+            CourseId = id;
+        }
     
         public int CourseId { get; set; }
         public string CourseName { get; set; }

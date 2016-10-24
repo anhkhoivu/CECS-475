@@ -11,8 +11,8 @@ namespace _475_Lab_4_Part_3
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Standard
+
+    public partial class Standard 
     {
         public Standard()
         {

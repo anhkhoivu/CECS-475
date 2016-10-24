@@ -20,6 +20,8 @@ namespace _475_Lab_4_Part_3
         public SchoolDBEntities()
             : base("name=SchoolDBEntities")
         {
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
