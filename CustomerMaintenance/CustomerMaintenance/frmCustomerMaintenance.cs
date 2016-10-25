@@ -108,9 +108,36 @@ namespace CustomerMaintenance
             DialogResult result = addModifyCustomerForm.ShowDialog();
             if (result == DialogResult.OK || result == DialogResult.Retry)
             {
-                selectedCustomer = addModifyCustomerForm.customer;
-                this.DisplayCustomer();
-                entities.SaveChanges();
+                try
+                {
+                    selectedCustomer = addModifyCustomerForm.customer;
+                    this.DisplayCustomer();
+                    entities.SaveChanges();
+                }
+                // Add concurrency error handling.
+                // Place the catch block before the one for a generic exception.
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    ex.Entries.Single().Reload();
+                    if (entities.Entry(selectedCustomer).State
+                        == EntityState.Detached)
+                    {
+                        MessageBox.Show("Another user has deleted that customer.",
+                            "Concurrency Error");
+                        txtCustomerID.Text = "";
+                        this.ClearControls();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Another user has updated that customer.",
+                            "Concurrency Error");
+                        this.DisplayCustomer();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, ex.GetType().ToString());
+                }
             }
             else
             {

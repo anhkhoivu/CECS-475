@@ -99,7 +99,6 @@ namespace CustomerMaintenance
                     this.PutCustomerData(customer);
                     try
                     {
-
                         // Update the database.
                         encontext.SaveChanges();
                         this.DialogResult = DialogResult.OK;
