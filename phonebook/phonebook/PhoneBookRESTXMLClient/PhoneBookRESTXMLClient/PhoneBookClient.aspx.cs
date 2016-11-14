@@ -45,13 +45,13 @@ namespace PhoneBookRESTXMLClient
             } // end if
             else if (findLastTextBox.Text != string.Empty) // send request to PhoneBookRESTXMLService if field is filled - 
             {
-               string result = await client.GetStringAsync(new Uri("http://localhost:52163/PhoneBookRESTXMLService.svc/RetrieveEntries/") + findLastTextBox.Text);
+               string result = await client.GetStringAsync(new Uri("http://localhost:52163/PhoneBookRESTXMLService.svc/RetrieveEntries/" + findLastTextBox.Text));
 
                XDocument xmlResponse = XDocument.Parse(result); // parse the returned XML string 
                clearFields();
                //string test = xmlResponse.Element(xmlNamespace + "ArrayOfPhoneBookEntry").Element(xmlNamespace + "PhoneBookEntry").Element(xmlNamespace + "LastName").Value;
                // if there are no phone book entries in response
-               if (xmlResponse.Element(xmlNamespace + "LastName").Value == string.Empty)
+               if (xmlResponse.Element(xmlNamespace + "ArrayOfPhoneBookEntry").Element(xmlNamespace + "PhoneBookEntry").Element(xmlNamespace + "LastName").Value == string.Empty)
                {
                   resultsTextBox.Text = "No entries with that last name.";
                }

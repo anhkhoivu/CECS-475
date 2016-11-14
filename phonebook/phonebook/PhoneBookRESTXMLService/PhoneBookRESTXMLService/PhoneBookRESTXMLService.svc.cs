@@ -32,8 +32,9 @@ namespace PhoneBookRESTXMLService
         // retrieve phone book entries with a given last name
         public PhoneBookEntry[] RetrieveEntries(string lastName)
         {
-            PhoneBookEntry[] allEntries = new PhoneBookEntry[10];
-            int i = 0;
+            List<PhoneBookEntry> newPB = new List<PhoneBookEntry>();
+            PhoneBookEntry[] allEntries;
+          
             foreach (PhoneBook entry in dbcontext.PhoneBooks)
             {
                 PhoneBookEntry newEntry = new PhoneBookEntry()
@@ -45,11 +46,11 @@ namespace PhoneBookRESTXMLService
                 newEntry.LastName = Regex.Replace(newEntry.LastName, @"\s", "");
                 if (newEntry.LastName == lastName)
                 {
-                    allEntries[i] = newEntry;
-                    i++;
+                    newPB.Add(newEntry);
                 }
             }
 
+            allEntries = newPB.ToArray();
             return allEntries;
         }
     }
