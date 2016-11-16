@@ -18,8 +18,8 @@ namespace PhoneBookRESTXMLService
 
         // retrieve phone book entries with a given last name
         [OperationContract]
-        [WebGet(UriTemplate = "/RetrieveEntries/{lastName}")]
-        PhoneBookEntry[] RetrieveEntries(string lastName);
+        [WebGet(UriTemplate = "/GetEntries/{lastName}")]
+        PhoneBookEntry[] GetEntries(string lastName);
    } // end interface IPhoneBookRESTXMLService
 }
 

@@ -20,7 +20,7 @@ namespace PhoneBookRESTXMLClient
 
        // namespace of XML response
      // namespace of XML response
-      private XNamespace xmlNamespace = XNamespace.Get("http://schemas.datacontract.org/2004/07/" + "PhoneBookRESTXMLClient");
+      private XNamespace xmlNamespace = XNamespace.Get("http://schemas.datacontract.org/2004/07/PhoneBookRESTXMLService");
       // handle page load events
 
       protected async void Page_Load(object sender, EventArgs e)
@@ -45,29 +45,27 @@ namespace PhoneBookRESTXMLClient
             } // end if
             else if (findLastTextBox.Text != string.Empty) // send request to PhoneBookRESTXMLService if field is filled - 
             {
-               string result = await client.GetStringAsync(new Uri("http://localhost:52163/PhoneBookRESTXMLService.svc/RetrieveEntries/" + findLastTextBox.Text));
+               string result = await client.GetStringAsync(new Uri("http://localhost:52163/PhoneBookRESTXMLService.svc/GetEntries/" + findLastTextBox.Text));
 
                XDocument xmlResponse = XDocument.Parse(result); // parse the returned XML string 
                clearFields();
-               //string test = xmlResponse.Element(xmlNamespace + "ArrayOfPhoneBookEntry").Element(xmlNamespace + "PhoneBookEntry").Element(xmlNamespace + "LastName").Value;
-               // if there are no phone book entries in response
-               if (xmlResponse.Element(xmlNamespace + "ArrayOfPhoneBookEntry").Element(xmlNamespace + "PhoneBookEntry").Element(xmlNamespace + "LastName").Value == string.Empty)
+
+               if (xmlResponse.Element(xmlNamespace + "ArrayOfPhoneBookEntry").Value == string.Empty)
                {
                   resultsTextBox.Text = "No entries with that last name.";
                }
                else
                {
                   // print information for each phone book entry
-                  foreach (XElement element in xmlResponse.Elements())
+                  foreach (XElement element in xmlResponse.Element(xmlNamespace + "ArrayOfPhoneBookEntry").Elements())
                   {
                      resultsTextBox.Text += '\n' + 
                         string.Format("{0}, {1}, {2}",
-                           element.Attribute("FirstName").Value,
-                           element.Attribute("LastName").Value,
-                           element.Attribute("PhoneNumber").Value);
+                           element.Element(xmlNamespace +  "LastName").Value,
+                           element.Element(xmlNamespace +  "FirstName").Value,
+                           element.Element(xmlNamespace +  "PhoneNumber").Value);
                   } // end foreach
                } // end else
-                    clearFields();
             } // end if
          }
       }

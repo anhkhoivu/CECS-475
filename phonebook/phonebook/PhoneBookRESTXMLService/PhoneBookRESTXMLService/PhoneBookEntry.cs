@@ -9,9 +9,9 @@ namespace PhoneBookRESTXMLService
       // property for the last name
       [DataMember]
       public string LastName { get; set; }
-    
+      [DataMember]
       public string FirstName { get; set; }
-    
+      [DataMember]
       public string PhoneNumber { get; set; }
 
       public PhoneBookEntry()

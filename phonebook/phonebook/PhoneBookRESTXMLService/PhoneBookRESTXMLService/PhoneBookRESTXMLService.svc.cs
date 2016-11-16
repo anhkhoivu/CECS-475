@@ -20,17 +20,18 @@ namespace PhoneBookRESTXMLService
             // create PhoneBook entry to be inserted in database
             PhoneBook entry = new PhoneBook()
             {
-                FirstName = firstName + " ",
-                LastName = lastName + " ",
+                FirstName = firstName,
+                LastName = lastName,
                 PhoneNumber = phoneNumber
             };
 
             // insert PhoneBook entry in database
             dbcontext.PhoneBooks.Add(entry);
+            dbcontext.SaveChanges();
         } // end method AddEntry
 
         // retrieve phone book entries with a given last name
-        public PhoneBookEntry[] RetrieveEntries(string lastName)
+        public PhoneBookEntry[] GetEntries(string lastName)
         {
             List<PhoneBookEntry> newPB = new List<PhoneBookEntry>();
             PhoneBookEntry[] allEntries;
