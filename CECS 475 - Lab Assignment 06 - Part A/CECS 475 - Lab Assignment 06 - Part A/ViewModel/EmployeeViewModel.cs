@@ -25,7 +25,7 @@ namespace CECS_475___Lab_Assignment_06___Part_A
         private ObservableCollection<Employee> employeeRoster;
         private List<Employee> originalList;
         public delegate bool ComparisonHandler(object first, object second, bool comparison);
-    
+
         //restore components
         private ICommand myRestore;
         private ICommand sortByLastName;
@@ -129,9 +129,8 @@ namespace CECS_475___Lab_Assignment_06___Part_A
             if (selectedSorting == SortingOrder.Ascending)
             {
                 var empQuery =
-                    from emp in originalList
-                    orderby emp.SocialSecurityNumber ascending
-                    select emp;
+                    originalList
+                    .OrderBy(emp => emp.SocialSecurityNumber);
 
                 ReloadListCollection(empQuery);
             }
