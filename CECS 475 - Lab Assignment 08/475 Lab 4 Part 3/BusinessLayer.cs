@@ -28,14 +28,21 @@ namespace _475_Lab_4_Part_3
         {
             return standardRepository.GetAll();
         }
-        /*
-        public Standard GetDepartmentByName(string standardName)
+
+        public Standard GetStandardByName(string standardName)
         {
             return standardRepository.GetSingle(
                 d => d.StandardName.Equals(standardName),
                 d => d.Students); //include related employees
         }
-        */
+
+        public Standard GetStandardByID(int id)
+        {
+            return standardRepository.GetSingle(
+                d => d.StandardId.Equals(id),
+                d => d.Students); //include related students
+        }
+
         public void addStandard(Standard departments)
         {
             standardRepository.Insert(departments);
@@ -48,19 +55,29 @@ namespace _475_Lab_4_Part_3
 
         public void removeStandard(Standard departments)
         {
-            standardRepository.Delete(departments);
+            standardRepository.Remove(departments);
         }
 
-        /*
-        public IList<Student> GetStudentsByStandardName(string departmentName)
+        public IList<Student> GetStudentsByStandardID(int standardID)
         {
-            return studentRepository.GetList(e => e.Standard.Name.Equals(departmentName));
+            return studentRepository.GetList(e => e.Standard.StandardId.Equals(standardID));
         }
-        */
 
         public IList<Student> getAllStudents()
         {
             return studentRepository.GetAll();
+        }
+
+        public Student getStudentByName(string studentName)
+        {
+            return studentRepository.GetSingle(
+                d => d.StudentName.Equals(studentName));
+        }
+
+        public Student getStudentByID(int studentId)
+        {
+            return studentRepository.GetSingle(
+                d => d.StudentID.Equals(studentId));
         }
 
         public void addStudent(Student student)
@@ -75,7 +92,7 @@ namespace _475_Lab_4_Part_3
 
         public void removeStudent(Student student)
         {
-            studentRepository.Delete(student);
+            studentRepository.Remove(student);
         }
     }
 }

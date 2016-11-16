@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -12,6 +16,7 @@ namespace _475_Lab_4_Part_3
     {
         protected DbContext context;
         protected DbSet<T> entitySet;
+
         public Repository(DbContext datacontext)
         {
             entitySet = datacontext.Set<T>();
@@ -23,30 +28,27 @@ namespace _475_Lab_4_Part_3
             context.SaveChanges();
         }
 
-        public void Insert(params T[] items)
+        public void Insert(T item)
         {
-            using (var context = new SchoolDBEntities())
-            {
-                foreach (T item in items)
-                {
-                    context.Entry(item).State = EntityState.Added;
-                    context.SaveChanges();
-                }
-            }
+            entitySet.Add(item);
+            context.Entry(item).State = EntityState.Added;
+            context.SaveChanges();
+            context.Entry(item).State = EntityState.Detached;
         }
 
-        public void Delete(T entity)
+        public void Remove(T item)
         {
-            //Use the context object and entity state to delete the entity
-            context.Entry(entity).State = EntityState.Deleted;
+            context.Entry(item).State = EntityState.Deleted;
             context.SaveChanges();
+            context.Entry(item).State = EntityState.Detached;
         }
 
-        public void Update(T entity)
+        public void Update(T item)
         {
-            //Use the context object and entity state to update the entity
-            context.Entry(entity).State = EntityState.Modified;
+            entitySet.Attach(item);
+            context.Entry(item).State = EntityState.Modified;
             context.SaveChanges();
+            context.Entry(item).State = EntityState.Detached;
         }
 
         public T GetById(T id)
@@ -73,7 +75,6 @@ namespace _475_Lab_4_Part_3
                 }
 
                 list = dbQuery
-                    .AsNoTracking()
                     .ToList<T>();
             }
             return list;
@@ -98,7 +99,7 @@ namespace _475_Lab_4_Part_3
             if (disposing)
             {
                 // Free any other managed objects here.
-                //
+                context.Dispose();
             }
 
             // Free any unmanaged objects here.
@@ -115,23 +116,41 @@ namespace _475_Lab_4_Part_3
         //First argument: lambda expression to search a record such as d => d.StandardName.Equals(standardName) to search am record by standard name
         //Second argument: navigation property that leads to the related records such as d => d.Students
         //The method returns the related records that met the condition in the first argument.
-        //An example of the method GetStandardByName(string standardName)
-        //public Standard GetStandardByName(string standardName)
-        //{
-        //return _standardRepository.GetSingle(d => d.StandardName.Equals(standardName), d => d.Students);
-        //} 
-        public T GetSingle(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
+        public virtual T GetSingle(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
         {
             T item = null;
-            IQueryable<T> dbQuery = null;
-            foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
-                dbQuery = entitySet.Include<T, object>(navigationProperty);
+
+                IQueryable<T> dbQuery = context.Set<T>();
+                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+                    dbQuery = entitySet.Include<T, object>(navigationProperty);
 
             item = dbQuery
                     .AsNoTracking()
                     .FirstOrDefault(where);
-            return item;
 
+            return item;
+        }
+
+        public virtual IList<T> GetList(Func<T, bool> where,
+             params Expression<Func<T, object>>[] navigationProperties)
+        {
+            List<T> list;
+            using (var context = new SchoolDBEntities())
+            {
+                IQueryable<T> dbQuery = context.Set<T>();
+
+                //Apply eager loading
+                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+                {
+                    dbQuery = dbQuery.Include<T, object>(navigationProperty);
+                }
+
+                list = dbQuery
+                    .AsNoTracking()
+                    .Where(where)
+                    .ToList<T>();
+            }
+            return list;
         }
     }
 }

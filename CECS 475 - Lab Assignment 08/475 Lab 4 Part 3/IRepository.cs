@@ -9,13 +9,13 @@ namespace _475_Lab_4_Part_3
 {
     public interface IRepository<T> : IDisposable
     {
-        void Insert(params T[] items);
-        void Delete(T entity);
+        void Insert(T items);
+        void Remove(T entity);
         void Update(T entity);
         T GetById(T id);
         IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
         IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties);
-        //IEnumerable<T> GetQuery();
+        IList<T> GetList(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties);
         T GetSingle(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties);
     }
 }

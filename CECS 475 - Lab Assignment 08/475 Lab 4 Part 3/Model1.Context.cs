@@ -17,18 +17,19 @@ namespace _475_Lab_4_Part_3
     
     public partial class SchoolDBEntities : DbContext
     {
+        internal object newItem;
+
         public SchoolDBEntities()
             : base("name=SchoolDBEntities")
         {
-            Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Standard> Standards { get; set; }
         public virtual DbSet<Student> Students { get; set; }
